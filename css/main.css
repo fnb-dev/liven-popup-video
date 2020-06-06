@@ -391,6 +391,46 @@ figure img {
 }
 
 
+/* Dark pop up style */
+.pop-up.dark .popup-inner{
+    background-color: #FF4864;
+}
+
+.pop-up.dark .popup-wrap:after{
+    background: #FFE3EA;
+}
+
+.pop-up.dark .drag-btn{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.pop-up.dark .popup-inner figure:after{
+    background: #FF5E77;
+    opacity: 1;
+}
+
+.pop-up.dark .contents h2{
+    color: #ffffff;
+}
+
+.pop-up.dark .contents p{
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.pop-up.dark .highlighted{
+    color: rgba(255, 255, 255, 1);
+}
+
+.pop-up.dark .btn.full-video{
+    background: #FFFFFF !important;
+    color: #33353E !important;
+}
+
+.pop-up.dark .btn-icon{
+    background: #FFE3EA;
+
+}
+
 /* =============== Responsive style =============== */
 @media only screen and (max-height: 736px) {
     
