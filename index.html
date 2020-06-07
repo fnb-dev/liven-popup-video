@@ -10,21 +10,25 @@
 
 <body>
     <div class="main">
-        <div class="pop-up dark" id="pop-up">
+        <div class="pop-up dark video-popup" id="pop-up">
             <div class="container popup-wrap" id="popup-wrap">
                 <div class="popup-inner" id="popup-inner">
-                    <button class="drag-btn"></button>
-                    <figure>
-                       <picture>
-                          <source media="max-height: 736px" src="img/popup-img.jpg" />
-                          <source media="min-height: 737px" src="img/popup-img.jpg" />
-                          <img src="img/popup-img.jpg" />
-                       </picture>
-                    </figure>
+                   <div class="figure">
+                      <div class="frame">
+                          <picture id="video-thumb">
+                              <source media="min-height: 737px" src="img/video-thumb.jpg" />
+                              <img src="img/video-thumb.jpg" />
+                           </picture>
+                           <video controls id="video" poster="img/fallback-img.png">
+                                <source src="video/lotus.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+                                <img src="img/fallback-img.png" title="Your browser does not support the <video> tag">
+                            </video>
+                      </div>
+                    </div>
                     <img src="svg/graphics-vector-dark.svg" alt="" class="graphics-vector">
                     <div class="contents">
                         <h2>Hello!</h2>
-                        <p>Enjoy every moment with us! <span class="highlighted">Want to watch the full video?</span></p>
+                        <p>Enjoy every moment with us!</p>
                     </div>
                     <img class="vector-img" src="svg/shape-vector-dark.svg" alt="Vector shape">
                     <div class="button-wrap">
