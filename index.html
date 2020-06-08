@@ -13,18 +13,21 @@
         <div class="pop-up dark video-popup" id="pop-up">
             <div class="container popup-wrap" id="popup-wrap">
                 <div class="popup-inner" id="popup-inner">
-                   <div class="figure">
-                      <div class="frame">
-                          <picture id="video-thumb">
-                              <source media="min-height: 737px" src="img/video-thumb.jpg" />
-                              <img src="img/video-thumb.jpg" />
-                           </picture>
-                           <video controls id="video" poster="img/fallback-img.png">
+                    <figure>
+                       <picture id="video-thumb">
+                          <source media="min-height: 737px" src="img/video-thumb.jpg" />
+                          <img src="img/video-thumb.jpg" />
+                          <div class="play-video" id="play-video">
+                              <img src="svg/play-icon.svg" alt="">
+                          </div>
+                       </picture>
+                       <div class="video-wrapper" id="video-wrapper">
+                           <video id="video" preload="auto" poster="img/fallback-img.png">
                                 <source src="video/lotus.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
                                 <img src="img/fallback-img.png" title="Your browser does not support the <video> tag">
                             </video>
-                      </div>
-                    </div>
+                       </div>
+                    </figure>
                     <img src="svg/graphics-vector-dark.svg" alt="" class="graphics-vector">
                     <div class="contents">
                         <h2>Hello!</h2>
