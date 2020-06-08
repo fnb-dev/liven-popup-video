@@ -3,13 +3,20 @@
         var videoWrapper = $('#video-wrapper');
         var myVideo = $('#video').get(0); 
         
-        $("#play-video").on('click touchstart', function (){
-            $(this).hide()
-            $('.popup-close').hide()
-            videoWrapper.fadeIn(400, function(){
-                playVideo();
-            });
-        })
+        myVideo.addEventListener("canplay", function() {
+           console.log("oncanplay");
+           setTimeout(function() {
+            console.log("play");
+        //Hit PLAY when video fully loaded
+            $("#play-video").on('click touchstart', function (){
+                $(this).hide()
+                $('.popup-close').hide()
+                videoWrapper.fadeIn(400, function(){
+                    playVideo();
+                });
+            })
+           }, 300);
+          });
         
         myVideo.addEventListener('loadedmetadata', function() {
             if (video.buffered.length === 0) return;
