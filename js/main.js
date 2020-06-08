@@ -3,12 +3,11 @@
         var videoWrapper = $('#video-wrapper');
         var myVideo = $('#video').get(0); 
         
-        
-        myVideo.addEventListener('loadedmetadata', function() {
-            if (video.buffered.length === 0) return;
-
-            var bufferedSeconds = video.buffered.end(0) - video.buffered.start(0);
-            console.log(bufferedSeconds + ' seconds of video are ready to play!');
+        myVideo.addEventListener("canplay", function() {
+           console.log("oncanplay");
+           setTimeout(function() {
+            console.log("play");
+        //Hit PLAY when video fully loaded
             $("#play-video").on('click touchstart', function (){
                 $(this).hide()
                 $('.popup-close').hide()
@@ -16,6 +15,14 @@
                     playVideo();
                 });
             })
+           }, 500);
+          });
+        
+        myVideo.addEventListener('loadedmetadata', function() {
+            if (video.buffered.length === 0) return;
+
+            var bufferedSeconds = video.buffered.end(0) - video.buffered.start(0);
+            console.log(bufferedSeconds + ' seconds of video are ready to play!');
         });
         
         myVideo.onended = (event) => {
