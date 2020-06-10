@@ -425,6 +425,10 @@ figure img {
     position: relative;
 }
 
+.showing{
+    pointer-events: none;
+}
+
 .pop-up.video-popup .popup-inner figure:after{
     position: absolute;
     left: 0;
@@ -474,9 +478,9 @@ figure img {
     display: none;
 }
 
-.pop-up.video-popup .popup-inner figure video{
+.video-wrapper video{
     width: 100%;
-    height: 100%;
+    height: auto;
     position: absolute;
     left: 0;
     top: 50%;
@@ -484,8 +488,6 @@ figure img {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    object-fit: contain;
-    object-position: center;
 }
 
 .pop-up.video-popup  .contents h2{

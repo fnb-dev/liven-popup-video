@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Liven popup video</title>
     <link rel="stylesheet" href="css/main.css">
+    
 </head>
 
 <body>
@@ -13,6 +14,13 @@
         <div class="pop-up dark video-popup" id="pop-up">
             <div class="container popup-wrap" id="popup-wrap">
                 <div class="popup-inner" id="popup-inner">
+                   <div class="video-wrapper" id="video-wrapper">
+                       <video id="video" preload="auto" poster="img/fallback-img.png">
+                            <source src="video/lotus.mp4" type="video/mp4" />
+                            <source src="video/lotus.webm" type="video/webm"/>
+                            <img src="img/fallback-img.png" title="Your browser does not support the <video> tag">
+                        </video>
+                   </div>
                     <figure>
                        <picture id="video-thumb">
                           <source media="min-height: 737px" src="img/video-thumb.jpg" />
@@ -21,12 +29,6 @@
                               <img src="svg/play-icon.svg" alt="">
                           </div>
                        </picture>
-                       <div class="video-wrapper" id="video-wrapper">
-                           <video id="video" preload="auto" poster="img/fallback-img.png">
-                                <source src="video/lotus.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
-                                <img src="img/fallback-img.png" title="Your browser does not support the <video> tag">
-                            </video>
-                       </div>
                     </figure>
                     <img src="svg/graphics-vector-dark.svg" alt="" class="graphics-vector">
                     <div class="contents">
@@ -35,12 +37,17 @@
                     </div>
                     <img class="vector-img" src="svg/shape-vector-dark.svg" alt="Vector shape">
                     <div class="button-wrap">
-                        <a href="#" class="full-video btn"><div class="btn-icon"><img src="svg/play-icon.svg" alt=""></div>Full video</a>
+                        <a href="#" class="full-video btn" id="playFullVideo"><div class="btn-icon"><img src="svg/play-icon.svg" alt=""></div>Full video</a>
                     </div>
                 </div>
                 <button class="popup-close">
                    <img src="img/close-red.png" alt=""> 
                 </button>
+            </div>
+            <div class="youtube-video">
+                <div class="iframe-container">
+                  <div id="youtubePlayer"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -50,6 +57,261 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>-->
     <script src="js/TweenMax.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // Youtube video play function
+        var player;
+        
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer', {
+                width: 600,
+                height: 400,
+                videoId: 'EF6Qfr0hYZI'
+            });
+        }
+        
+        $('#playFullVideo').on('click', function () {
+            $('.youtube-video').fadeIn(400, function(){
+                player.playVideo();
+            })
+        });
+        
+        $('.youtube-video').on('click', function () {
+            player.stopVideo();
+            $(this).fadeOut()
+        });
+        // End Youtube video play function
+        
+        
+        /*// set mimetype and codec
+        var mimeType = "video/mp4";
+        var codecs = "avc1.4D401F";
+        
+        // Create media source instance
+        var ms = new MediaSource();
+        var sourceBuffer;
+        var segNum = 0;
+        var maxSegNum = 65;
+        
+        function startup(){
+            // add event listeners
+            ms.addEventListener('webkitsourceopen', opened, false);
+            //ms.addEventListener('webkitsourceclose', closed, false);
+            ms.addEventListener('sourceopen', opened, false);
+            //ms.addEventListener('sourceclose', closed, false);
+            
+            // get reference to video
+            video = document.querySelector('#video');
+            
+            // set mediasource as source of video
+            video.src = window.URL.createObjectURL(ms);              
+        }
+        
+        function opened() {
+            // create source buffer
+            var value = mimeType+';codecs="'+codecs+'"';
+            sourceBuffer = ms.addSourceBuffer(value);
+            
+            // request initialization segment
+            var req = new XMLHttpRequest();
+            req.responseType = "arraybuffer";
+            req.open("GET", "http://localhost/works/2020/06-2020/liven-popup-video/video/lotus.mp4", true);
+            req.onload = function(){
+                var resp = req.response;
+                var array = new Uint8Array(resp);
+                sourceBuffer.appendBuffer(array);
+                // wait until sourceBuffer is primed with initialization segment before loading content
+                //sourceBuffer.addEventListener("updateend", loadSegment);
+            }
+            req.send();
+        }
+        
+//        function loadSegment(){
+//            // this video has only 65 segments, so stop after 65
+//            if(segNum < maxSegNum){
+//                getSegment(segNum);
+//                segNum++;
+//            }
+//        }
+        
+        function getSegment(segNum){
+            var req = new XMLHttpRequest();
+            req.responseType = "arraybuffer";
+            req.open("GET", "http://localhost/works/2020/06-2020/liven-popup-video/video/"+segNum+".mp4", true);
+            req.onload = function(){
+                var resp = req.response;
+                var array = new Uint8Array(resp);
+                sourceBuffer.appendBuffer(resp);
+            }
+            req.send();
+        }
+        
+        window.onload = function(){
+            startup();
+        }*/
+        
+        
+        
+        $(function () { 
+            var BasicPlayer = function () { 
+                var self = this; 
+                this.initiate = function (sourceFile) {
+                    if (!window.MediaSource || !MediaSource.isTypeSupported('video/webm; codecs="vp8,vorbis"')) {
+                        self.setState("Your browser is not supported"); 
+                        return; 
+                    } 
+                } 
+                this.setState = function (state) {
+                    $('#state-display').html(state); 
+                } 
+            } 
+            var basicPlayer = new BasicPlayer(); 
+            window.updatePlayer = function () {
+                var sourceFile = $('#source-file').val(); basicPlayer.initiate(sourceFile); 
+            } 
+            updatePlayer();
+            
+            this.initiate = function (sourceFile) { 
+                if (!window.MediaSource || !MediaSource.isTypeSupported('video/webm; codecs="vp8,vorbis"')) {
+                    self.setState("Your browser is not supported"); return; 
+                } 
+                self.clearUp(); 
+                self.sourceFile = sourceFile; 
+                self.setState("Creating media source using"); 
+                
+                //create the video element 
+                self.videoElement = $('<video controls></video>')[0]; 
+                //create the media source 
+                self.mediaSource = new MediaSource(); self.mediaSource.addEventListener('sourceopen', function () {
+                    self.setState("Creating source buffer"); 
+                    //when the media source is opened create the source buffer
+                    self.createSourceBuffer(); 
+                }, false); 
+                //append the video element to the DOM 
+                self.videoElement.src = window.URL.createObjectURL(self.mediaSource);
+                $('#basic-player').append($(self.videoElement)); 
+            } 
+            this.clearUp = function() {
+                if (self.videoElement) { 
+                    //clear down any resources from the previous video embed if it exists 
+                    $(self.videoElement).remove(); 
+                    delete self.mediaSource; 
+                    delete self.sourceBuffer; 
+                } 
+            }
+            
+            this.createSourceBuffer = function () { 
+                self.sourceBuffer = self.mediaSource.addSourceBuffer('video/webm; codecs="vp8,vorbis"'); 
+                self.sourceBuffer.addEventListener('updateend', function () {
+                    self.setState("Ready"); 
+                }, false); 
+                var xhr = new XMLHttpRequest(); 
+                xhr.open('GET', self.sourceFile, true); 
+                xhr.responseType = 'arraybuffer'; 
+                xhr.onload = function (e) { 
+                    if (xhr.status !== 200) { 
+                        self.setState("Failed to download video data"); 
+                        self.clearUp(); 
+                    } else { 
+                        var arr = new Uint8Array(xhr.response); 
+                        if (!self.sourceBuffer.updating) { 
+                            self.setState("Appending video data to buffer"); self.sourceBuffer.appendBuffer(arr); 
+                        } else { 
+                            self.setState("Source Buffer failed to update"); 
+                        } 
+                    } 
+                }; 
+                xhr.onerror = function () { 
+                    self.setState("Failed to download video data"); 
+                    self.clearUp(); 
+                }; 
+                xhr.send(); 
+                self.setState("Downloading video data"); 
+            }
+            
+            function Cluster(byteStart, byteEnd, isInitCluster, timeStart, timeEnd) {
+                this.byteStart = byteStart; 
+                //byte range start inclusive 
+                this.byteEnd = byteEnd; 
+                //byte range end exclusive 
+                this.timeStart = timeStart ? timeStart : -1; 
+                //timecode start inclusive 
+                this.timeEnd = timeEnd ? timeEnd : -1; 
+                //exclusive 
+                this.requested = false; 
+                //cluster download has started 
+                this.isInitCluster = isInitCluster; 
+                //is an init cluster 
+                this.queued = false; 
+                //cluster has been downloaded and queued to be appended to source buffer 
+                this.buffered = false; 
+                //cluster has been added to source buffer 
+                this.data = null; 
+                //cluster data from vid file 
+            }
+            
+            Cluster.prototype.download = function (callback) {
+                this.requested = true; this._getClusterData(function () {
+                    self.flushBufferQueue(); 
+                    if (callback) { 
+                        callback(); 
+                    } 
+                }) 
+            }; 
+            Cluster.prototype._makeCacheBuster = function() { 
+                var text = ""; 
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; 
+                for (var i = 0; i < 10; i++) 
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+                return text; 
+            }; 
+            Cluster.prototype._getClusterData = function (callback, retryCount) {
+                var xhr = new XMLHttpRequest(); 
+                var vidUrl = self.sourceFile; if (retryCount) { 
+                    vidUrl += '?cacheBuster=' + this._makeCacheBuster(); 
+                } 
+                    xhr.open('GET', vidUrl, true); 
+                    xhr.responseType = 'arraybuffer'; 
+                xhr.timeout = 6000; 
+                xhr.setRequestHeader('Range', 'bytes=' + this.byteStart + '-' + this.byteEnd); 
+                xhr.send(); 
+                var cluster = this; 
+                xhr.onload = function (e) {
+                    if (xhr.status != 206) {
+                        consoel.error("media: Unexpected status code"+ xhr.status); return false; 
+                    } 
+                    cluster.data = new Uint8Array(xhr.response); 
+                    cluster.queued = true; 
+                    callback(); 
+                }; 
+                xhr.ontimeout = function () {
+                    var retryAmount = !retryCount ? 0 : retryCount; 
+                    if (retryCount == 2) { 
+                        self._failed(); 
+                    } else { 
+                        cluster._getClusterData(callback, retryCount++); 
+                    } 
+                } 
+            };
+            
+        });
+        
+        var videoWrapper = $('#video-wrapper');
+        var myVideo = $('#video').get(0); 
+        
+        $("#play-video").on('click touchstart', function (){
+            $(this).hide()
+            $('.popup-close').hide()
+            videoWrapper.fadeIn(400, function(){
+                playVideo();
+            });
+        })
+        
+        function playVideo() { 
+           myVideo.play();
+        } 
+        
+    </script>
 </body>
 
 </html>
